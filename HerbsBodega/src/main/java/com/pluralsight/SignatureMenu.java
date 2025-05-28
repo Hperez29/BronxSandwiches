@@ -13,7 +13,7 @@ public class SignatureMenu {
         System.out.print("Choose a sandwich to customize: ");
 
         Sandwich sandwich = switch (scanner.nextLine()) {
-            case "1" -> new BltSandwich();
+            case "1" -> new BLTSandwich();
             case "2" -> new PhillyCheeseSteakSandwich();
             default -> null;
         };
@@ -30,8 +30,8 @@ public class SignatureMenu {
         promptRemoveToppings(scanner, sandwich);
 
         // Add new toppings
-        List<Toppings> additional = SandwichBuilder.promptToppings(scanner, sandwich.getSize());
-        for (Toppings t : additional) {
+        List<Topping> additional = SandwichBuilder.promptToppings(scanner, String.valueOf(sandwich.getSize()));
+        for (Topping t : additional) {
             sandwich.addTopping(t);
         }
 
@@ -40,7 +40,7 @@ public class SignatureMenu {
 
     private static void displayToppings(Sandwich sandwich) {
         System.out.println("Current toppings:");
-        List<Toppings> toppings = sandwich.getToppings();
+        List<Topping> toppings = sandwich.getToppings();
         for (int i = 0; i < toppings.size(); i++) {
             System.out.println((i + 1) + ") " + toppings.get(i));
         }

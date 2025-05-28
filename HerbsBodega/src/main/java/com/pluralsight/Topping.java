@@ -5,7 +5,7 @@ public class Topping {
     private boolean isPremium;
     private boolean isExtra;
 
-    public Topping(String name, boolean isPremium, boolean isExtra) {
+    public Topping(String name, boolean isPremium) {
         this.name = name;
         this.isPremium = isPremium;
         this.isExtra = isExtra;

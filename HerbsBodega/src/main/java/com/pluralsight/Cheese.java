@@ -1,6 +1,6 @@
 package com.pluralsight;
 
-public class Cheese extends Toppings {
+public class Cheese extends Topping {
     public Cheese(String name, boolean extra) {
         super(name, extra);
     }
@@ -12,6 +12,7 @@ public class Cheese extends Toppings {
             case "12" -> 2.25;
             default -> 0;
         };
+        boolean extra = false;
         return cost + (extra ? switch (size) {
             case "4" -> 0.30;
             case "8" -> 0.60;

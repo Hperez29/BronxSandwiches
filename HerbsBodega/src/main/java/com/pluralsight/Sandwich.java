@@ -9,12 +9,16 @@ public class Sandwich {
     private boolean toasted;
     private List<Topping> toppings = new ArrayList<>();
 
-    public Sandwich(String name, String breadType, int size, boolean toasted) {
-        this.name = name;
-        this.breadType = breadType;
-        this.size = size;
-        this.toasted = toasted;
-    }
+    public class Sandwich {
+        private String size;
+        private boolean toasted;
+        // other fields...
+
+        public Sandwich(String size, String bread, boolean toasted, List<Topping> toppings) {
+            this.size = size;
+            this.bread = bread;
+            this.toasted = toasted;
+            this.topping = toppings;
 
     public void addTopping(Topping topping) {
         toppings.add(topping);

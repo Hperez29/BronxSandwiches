@@ -1,67 +1,55 @@
 package com.pluralsight;
 
-import java.util.*;
-import java.io.*;
-import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Order {
     private List<Sandwich> sandwiches = new ArrayList<>();
-    private List<DrinksMenu> drinksMenus = new ArrayList<>();
-    private List<ChipsMenu> chips = new ArrayList<>();
+    private List<DrinkMenu> drinks = new ArrayList<>();
+    private List<ChipMenu> chips = new ArrayList<>();
 
-    public void addSandwich(Sandwich s) {
-        sandwiches.add(s);
+    public void addSandwich(Sandwich sandwich) {
+        sandwiches.add(sandwich);
     }
 
-    public void addDrink(DrinksMenu d) {
-        drinksMenus.add(d);
+    public void addDrink(DrinkMenu drink) {
+        drinks.add(drink);
     }
 
-    public void addChips(ChipsMenu c) {
-        chips.add(c);
-    }
-
-    public double getTotalCost() {
-        return sandwiches.stream().mapToDouble(Sandwich::calculateCost).sum() +
-                drinksMenus.stream().mapToDouble(DrinksMenu::getCost).sum() +
-                chips.stream().mapToDouble(ChipsMenu::getCost).sum();
+    public void addChips(ChipMenu chip) {
+        chips.add(chip);
     }
 
     public void displayOrder() {
-        System.out.println("\n--- Order Details ---");
-        for (Sandwich s : sandwiches) {
-            System.out.println(s);
+        System.out.println("\n--- Current Order ---");
+        if (sandwiches.isEmpty() && drinks.isEmpty() && chips.isEmpty()) {
+            System.out.println("No items in order.");
+            return;
         }
-        for (DrinksMenu d : drinksMenus) {
-            System.out.println(d);
+
+        if (!sandwiches.isEmpty()) {
+            System.out.println("Sandwiches:");
+            for (Sandwich s : sandwiches) {
+                System.out.println("- " + s.getName());
+            }
         }
-        for (ChipsMenu c : chips) {
-            System.out.println(c);
+        if (!drinks.isEmpty()) {
+            System.out.println("Drinks:");
+            for (DrinkMenu d : drinks) {
+                System.out.println("- " + d.getName());
+            }
         }
-        System.out.printf("Total: $%.2f\n", getTotalCost());
+        if (!chips.isEmpty()) {
+            System.out.println("Chips:");
+            for (ChipMenu c : chips) {
+                System.out.println("- " + c.getName());
+            }
+        }
     }
 
     public void saveReceipt() {
-        String filename = new SimpleDateFormat("yyyyMMdd-HHmmss'.txt'").format(new Date());
-        File dir = new File("receipts");
-        if (!dir.exists()) {
-            dir.mkdirs();
-        }
-
-        try (PrintWriter out = new PrintWriter(new File(dir, filename))) {
-            for (Sandwich s : sandwiches) {
-                out.println(s);
-            }
-            for (DrinksMenu d : drinksMenus) {
-                out.println(d);
-            }
-            for (ChipsMenu c : chips) {
-                out.println(c);
-            }
-            out.printf("Total: $%.2f\n", getTotalCost());
-            System.out.println("Receipt saved as: receipts/" + filename);
-        } catch (IOException e) {
-            System.out.println("Failed to save receipt.");
-        }
+        // For now, just print confirmation.
+        System.out.println("Order receipt saved (this is a stub).");
+        // You can later implement file writing here.
     }
 }

@@ -19,7 +19,7 @@ public class SandwichBuilder {
         boolean toasted = promptToasted(scanner);
 
         // Toppings
-        List<Toppings> toppings = promptToppings(scanner, size);
+        List<Topping> toppings = promptToppings(scanner, size);
 
         return new Sandwich(size, bread, toasted, toppings);
     }
@@ -58,8 +58,8 @@ public class SandwichBuilder {
         return scanner.nextLine().equalsIgnoreCase("y");
     }
 
-    private static List<Toppings> promptToppings(Scanner scanner, String size) {
-        List<Toppings> toppings = new ArrayList<>();
+    public static List<Topping> promptToppings(Scanner scanner, String size) {
+        List<Topping> toppings = new ArrayList<>();
 
         // Meats
         String[] meats = {"Steak", "Ham", "Salami", "Roast Beef", "Chicken", "Bacon"};

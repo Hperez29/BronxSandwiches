@@ -41,15 +41,15 @@ public class OrderManager {
                     break;
 
                 case "2":
-                    DrinksMenu drinksMenu = DrinkMenu.chooseDrink(scanner);
-                    if (drinksMenu != null) {
-                        currentOrder.addDrink(drinksMenu);
-                        System.out.println(drinksMenu.getName() + " added to order.");
+                    DrinkMenu drinkMenu = DrinkMenu.chooseDrink(scanner);
+                    if (drinkMenu != null) {
+                        currentOrder.addDrink(drinkMenu);
+                        System.out.println(drinkMenu.getName() + " added to order.");
                     }
                     break;
 
                 case "3":
-                    ChipsMenu chips = ChipsMenu.create(scanner);
+                    ChipMenu chips = ChipMenu.create(scanner);
                     if (chips != null) {
                         currentOrder.addChips(chips);
                         System.out.println(chips.getName() + " added to order.");
