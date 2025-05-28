@@ -1,6 +1,6 @@
 package com.pluralsight;
 
-public class Meat extends Topping {
+public class Meat extends Toppings {
     public Meat(String name, boolean extra) {
         super(name, extra);
     }

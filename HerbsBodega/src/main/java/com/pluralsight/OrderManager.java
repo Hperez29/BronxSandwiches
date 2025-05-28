@@ -1,47 +1,81 @@
 package com.pluralsight;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class OrderManager {
-    private Order currentOrder = new Order();
+
 
     public void startOrder(Scanner scanner) {
+        Order currentOrder = new Order();
         boolean ordering = true;
 
         while (ordering) {
-            System.out.println("\n--- Order Menu ---");
+            System.out.println("\n--- HerbsBodega POS ---");
             System.out.println("1) Add Sandwich");
             System.out.println("2) Add Drink");
             System.out.println("3) Add Chips");
             System.out.println("4) Checkout");
-            System.out.println("0) Cancel Order");
+            System.out.println("0) Cancel Order / Exit");
             System.out.print("Choose an option: ");
-            int choice = scanner.nextInt();
-            scanner.nextLine();
+            String input = scanner.nextLine();
 
-            switch (choice) {
-                case 1 -> currentOrder.addSandwich(SandwichBuilder.build(scanner));
-                case 2 -> currentOrder.addDrink(Drink.create(scanner));
-                case 3 -> currentOrder.addChips(Chips.create(scanner));
-                case 4 -> {
+            switch (input) {
+                case "1":
+                    System.out.println("\n1) Build Your Own\n2) Signature Sandwich");
+                    String subChoice = scanner.nextLine();
+
+                    Sandwich sandwich = null;
+                    if (subChoice.equals("1")) {
+                        sandwich = SandwichBuilder.build(scanner);
+                    } else if (subChoice.equals("2")) {
+                        sandwich = SignatureMenu.chooseAndCustomizeSignatureSandwich(scanner);
+                    } else {
+                        System.out.println("Invalid choice.");
+                        break;
+                    }
+
+                    if (sandwich != null) {
+                        currentOrder.addSandwich(sandwich);
+                        System.out.println(sandwich.getName() + " added to order.");
+                    }
+                    break;
+
+                case "2":
+                    DrinksMenu drinksMenu = DrinkMenu.chooseDrink(scanner);
+                    if (drinksMenu != null) {
+                        currentOrder.addDrink(drinksMenu);
+                        System.out.println(drinksMenu.getName() + " added to order.");
+                    }
+                    break;
+
+                case "3":
+                    ChipsMenu chips = ChipsMenu.create(scanner);
+                    if (chips != null) {
+                        currentOrder.addChips(chips);
+                        System.out.println(chips.getName() + " added to order.");
+                    }
+                    break;
+
+                case "4":
                     currentOrder.displayOrder();
-                    System.out.print("Confirm order? (y/n): ");
-                    if (scanner.nextLine().equalsIgnoreCase("y")) {
+                    System.out.println("1) Confirm and Save\n0) Cancel Order");
+                    String confirm = scanner.nextLine();
+                    if (confirm.equals("1")) {
                         currentOrder.saveReceipt();
                         ordering = false;
                     } else {
-                        System.out.println("Order canceled.");
-                        currentOrder = new Order();
+                        System.out.println("Order cancelled.");
                         ordering = false;
                     }
-                }
-                case 0 -> {
-                    System.out.println("Order canceled.");
+                    break;
+
+                case "0":
+                    System.out.println("Order cancelled.");
                     ordering = false;
-                }
-                default -> System.out.println("Invalid option.");
+                    break;
+
+                default:
+                    System.out.println("Invalid choice.");
             }
         }
     }

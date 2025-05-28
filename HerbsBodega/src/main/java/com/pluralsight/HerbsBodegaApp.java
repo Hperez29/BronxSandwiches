@@ -13,7 +13,7 @@ public class HerbsBodegaApp {
             System.out.println("0) Exit");
             System.out.print("Choose an option: ");
             int choice = scanner.nextInt();
-            scanner.nextLine();
+            scanner.nextLine(); // Consume newline
 
             switch (choice) {
                 case 1 -> new OrderManager().startOrder(scanner);

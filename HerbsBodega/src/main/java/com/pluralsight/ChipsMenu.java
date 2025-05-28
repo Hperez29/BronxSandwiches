@@ -2,16 +2,16 @@ package com.pluralsight;
 
 import java.util.Scanner;
 
-public class Chips {
+public class ChipsMenu {
     private String type;
 
-    public Chips(String type) {
+    public ChipsMenu(String type) {
         this.type = type;
     }
 
-    public static Chips create(Scanner scanner) {
+    public static ChipsMenu create(Scanner scanner) {
         System.out.print("Enter chip type: ");
-        return new Chips(scanner.nextLine());
+        return new ChipsMenu(scanner.nextLine());
     }
 
     public double getCost() {

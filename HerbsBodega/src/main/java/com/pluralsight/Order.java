@@ -6,35 +6,58 @@ import java.text.SimpleDateFormat;
 
 public class Order {
     private List<Sandwich> sandwiches = new ArrayList<>();
-    private List<Drink> drinks = new ArrayList<>();
-    private List<Chips> chips = new ArrayList<>();
+    private List<DrinksMenu> drinksMenus = new ArrayList<>();
+    private List<ChipsMenu> chips = new ArrayList<>();
 
-    public void addSandwich(Sandwich s) { sandwiches.add(s); }
-    public void addDrink(Drink d) { drinks.add(d); }
-    public void addChips(Chips c) { chips.add(c); }
+    public void addSandwich(Sandwich s) {
+        sandwiches.add(s);
+    }
+
+    public void addDrink(DrinksMenu d) {
+        drinksMenus.add(d);
+    }
+
+    public void addChips(ChipsMenu c) {
+        chips.add(c);
+    }
 
     public double getTotalCost() {
         return sandwiches.stream().mapToDouble(Sandwich::calculateCost).sum() +
-                drinks.stream().mapToDouble(Drink::getCost).sum() +
-                chips.stream().mapToDouble(Chips::getCost).sum();
+                drinksMenus.stream().mapToDouble(DrinksMenu::getCost).sum() +
+                chips.stream().mapToDouble(ChipsMenu::getCost).sum();
     }
 
     public void displayOrder() {
         System.out.println("\n--- Order Details ---");
-        sandwiches.forEach(System.out::println);
-        drinks.forEach(System.out::println);
-        chips.forEach(System.out::println);
+        for (Sandwich s : sandwiches) {
+            System.out.println(s);
+        }
+        for (DrinksMenu d : drinksMenus) {
+            System.out.println(d);
+        }
+        for (ChipsMenu c : chips) {
+            System.out.println(c);
+        }
         System.out.printf("Total: $%.2f\n", getTotalCost());
     }
 
     public void saveReceipt() {
         String filename = new SimpleDateFormat("yyyyMMdd-HHmmss'.txt'").format(new Date());
         File dir = new File("receipts");
-        if (!dir.exists()) dir.mkdirs();
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
+
         try (PrintWriter out = new PrintWriter(new File(dir, filename))) {
-            sandwiches.forEach(s -> out.println(s.toString()));
-            drinks.forEach(d -> out.println(d.toString()));
-            chips.forEach(c -> out.println(c.toString()));
+            for (Sandwich s : sandwiches) {
+                out.println(s);
+            }
+            for (DrinksMenu d : drinksMenus) {
+                out.println(d);
+            }
+            for (ChipsMenu c : chips) {
+                out.println(c);
+            }
             out.printf("Total: $%.2f\n", getTotalCost());
             System.out.println("Receipt saved as: receipts/" + filename);
         } catch (IOException e) {
