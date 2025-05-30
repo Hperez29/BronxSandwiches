@@ -79,4 +79,8 @@ public class Sandwich {
                 toasted ? " (toasted)" : "",
                 toppings.isEmpty() ? "no toppings" : toppings);
     }
+
+    public double getPrice() {
+    return getPrice();
+    }
 }

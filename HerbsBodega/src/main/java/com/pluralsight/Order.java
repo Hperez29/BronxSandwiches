@@ -1,5 +1,9 @@
 package com.pluralsight;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,8 +52,48 @@ public class Order {
     }
 
     public void saveReceipt() {
-        // For now, just print confirmation.
-        System.out.println("Order receipt saved (this is a stub).");
-        // You can later implement file writing here.
+        String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss"));
+        String fileName = "receipt_" + timestamp + ".txt";
+
+        try (FileWriter writer = new FileWriter(fileName)) {
+            writer.write("--- HerbsBodega Receipt ---\n");
+            writer.write("Date: " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")) + "\n\n");
+
+            double total = 0.0;
+
+            if (!sandwiches.isEmpty()) {
+                writer.write("Sandwiches:\n");
+                for (Sandwich s : sandwiches) {
+                    writer.write("- " + s.getName() + " - $" + String.format("%.2f", s.getPrice()) + "\n");
+                    total = total + s.getPrice();
+                }
+                writer.write("\n");
+            }
+
+            if (!drinks.isEmpty()) {
+                writer.write("Drinks:\n");
+                for (DrinkMenu d : drinks) {
+                    writer.write("- " + d.getName() + " - $" + String.format("%.2f", d.getPrice()) + "\n");
+                    total += d.getPrice();
+                }
+                writer.write("\n");
+            }
+
+            if (!chips.isEmpty()) {
+                writer.write("Chips:\n");
+                for (ChipMenu c : chips) {
+                    writer.write("- " + c.getName() + " - $" + String.format("%.2f", c.getPrice()) + "\n");
+                    total += c.getPrice();
+                }
+                writer.write("\n");
+            }
+
+            writer.write("Total: $" + String.format("%.2f", total) + "\n");
+            writer.write("\nThank you for visiting HerbsBodega!\n");
+
+            System.out.println("Receipt saved as " + fileName);
+        } catch (IOException e) {
+            System.out.println("Error saving receipt: " + e.getMessage());
+        }
     }
 }
