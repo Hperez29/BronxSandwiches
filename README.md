@@ -18,3 +18,4 @@ Receipt Generation: Save detailed receipts of completed orders.
 
 <img width="536" alt="image" src="https://github.com/user-attachments/assets/4181b330-05ca-42cb-8dfe-0a441d78eaf8" />
 
+<img width="271" alt="image" src="https://github.com/user-attachments/assets/33e35f67-46b9-4035-9f9f-c14dfd334109" />
