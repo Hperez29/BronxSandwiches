@@ -1,0 +1,9 @@
+--- HerbsBodega Receipt ---
+Date: 2025-05-30 11:11
+
+Sandwiches:
+- Philly Cheese Steak - $10.50
+
+Total: $10.50
+
+Thank you for visiting HerbsBodega!

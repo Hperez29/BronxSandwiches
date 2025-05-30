@@ -1,0 +1,9 @@
+--- HerbsBodega Receipt ---
+Date: 2025-05-30 11:13
+
+Sandwiches:
+- Ham  - $7.00
+
+Total: $7.00
+
+Thank you for visiting HerbsBodega!
