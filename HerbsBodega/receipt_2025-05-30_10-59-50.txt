@@ -1,0 +1,9 @@
+--- HerbsBodega Receipt ---
+Date: 2025-05-30 10:59
+
+Sandwiches:
+- BLT - $9.00
+
+Total: $9.00
+
+Thank you for visiting HerbsBodega!

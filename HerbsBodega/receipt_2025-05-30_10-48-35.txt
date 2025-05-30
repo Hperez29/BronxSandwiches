@@ -1,0 +1,9 @@
+--- HerbsBodega Receipt ---
+Date: 2025-05-30 10:48
+
+Sandwiches:
+- Steak Sandwich - $0.00
+
+Total: $0.00
+
+Thank you for visiting HerbsBodega!

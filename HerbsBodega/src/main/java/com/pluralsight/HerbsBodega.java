@@ -22,31 +22,59 @@ public class HerbsBodega {
                     Order order = new Order();
                     System.out.println("Starting new order...");
 
-                    // === Build Sandwich ===
-                    System.out.print("Enter sandwich name: ");
-                    String sandwichName = scanner.nextLine();
+                    System.out.println("1) Build Your Own Sandwich");
+                    System.out.println("2) Choose a Signature Sandwich");
+                    System.out.print("Select sandwich option: ");
+                    int sandwichOption = Integer.parseInt(scanner.nextLine());
 
-                    System.out.print("Choose bread (White, Wheat, Sourdough): ");
-                    String bread = scanner.nextLine();
+                    Sandwich sandwich = null;
 
-                    System.out.print("Enter size (4, 8, or 12 inches): ");
-                    int size = Integer.parseInt(scanner.nextLine());
+                    if (sandwichOption == 1) {
+                        // === Build Your Own Sandwich ===
+                        System.out.print("Enter sandwich name: ");
+                        String sandwichName = scanner.nextLine();
 
-                    System.out.print("Toasted? (yes/no): ");
-                    boolean toasted = scanner.nextLine().equalsIgnoreCase("yes");
+                        System.out.print("Choose bread (White, Wheat, Sourdough): ");
+                        String bread = scanner.nextLine();
 
-                    // Toppings selection (basic example)
-                    List<Topping> toppings = new ArrayList<>();
-                    System.out.println("Add toppings (type 'done' when finished):");
-                    while (true) {
-                        System.out.print("Topping: ");
-                        String toppingInput = scanner.nextLine();
-                        if (toppingInput.equalsIgnoreCase("done")) break;
-                        toppings.add(new Topping(toppingInput));  // assumes Topping class has constructor with name
+                        System.out.print("Enter size (4, 8, or 12 inches): ");
+                        int size = Integer.parseInt(scanner.nextLine());
+
+                        System.out.print("Toasted? (yes/no): ");
+                        boolean toasted = scanner.nextLine().equalsIgnoreCase("yes");
+
+                        List<Topping> toppings = new ArrayList<>();
+                        System.out.println("Add toppings (type 'done' when finished):");
+                        while (true) {
+                            System.out.print("Topping: ");
+                            String toppingInput = scanner.nextLine();
+                            if (toppingInput.equalsIgnoreCase("done")) break;
+                            toppings.add(new Topping(toppingInput));
+                        }
+
+                        sandwich = new Sandwich(sandwichName, bread, toasted, toppings);
+                        sandwich.setSize(size);
+                    } else if (sandwichOption == 2) {
+                        // === Signature Sandwich Menu ===
+                        System.out.println("1) BLT");
+                        System.out.println("2) Philly Cheese Steak");
+                        System.out.print("Choose one: ");
+                        int sigChoice = Integer.parseInt(scanner.nextLine());
+
+                        if (sigChoice == 1) {
+                            sandwich = new BLTSandwich();
+                        } else if (sigChoice == 2) {
+                            sandwich = new PhillyCheeseSteakSandwich();
+                        }
+
+                        System.out.print("Enter size (4, 8, or 12 inches): ");
+                        int size = Integer.parseInt(scanner.nextLine());
+                        if (sandwich != null) sandwich.setSize(size);
                     }
 
-                    Sandwich sandwich = new Sandwich(sandwichName, size, bread, toasted, toppings);
-                    order.addSandwich(sandwich);
+                    if (sandwich != null) {
+                        order.addSandwich(sandwich);
+                    }
 
                     // === Add Drink ===
                     System.out.print("Add a drink? (yes/no): ");

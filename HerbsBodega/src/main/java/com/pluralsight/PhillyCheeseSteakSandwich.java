@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class PhillyCheeseSteakSandwich extends Sandwich {
 
     public PhillyCheeseSteakSandwich() {
-        super("Philly Cheese Steak", 8, "White", true, new ArrayList<>());
+        super("Philly Cheese Steak", "White", true, new ArrayList<>());
 
         // Default toppings
         this.addTopping(new Meat("Steak", false));

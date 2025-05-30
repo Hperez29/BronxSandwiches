@@ -1,23 +1,29 @@
 package com.pluralsight;
 
 public class Cheese extends Topping {
-    public Cheese(String name, boolean extra) {
-        super(name, extra);
+    private boolean isExtra;
+
+    public Cheese(String name, boolean isExtra) {
+        super(name);
+        this.isExtra = isExtra;
     }
 
-    public double getCost(String size) {
-        double cost = switch (size) {
-            case "4" -> 0.75;
-            case "8" -> 1.50;
-            case "12" -> 2.25;
-            default -> 0;
-        };
-        boolean extra = false;
-        return cost + (extra ? switch (size) {
-            case "4" -> 0.30;
-            case "8" -> 0.60;
-            case "12" -> 0.90;
-            default -> 0;
-        } : 0);
+    @Override
+    public double getPrice(int size) {
+        if (isExtra) {
+            switch (size) {
+                case 4: return 0.30;
+                case 8: return 0.60;
+                case 12: return 0.90;
+                default: return 0;
+            }
+        } else {
+            switch (size) {
+                case 4: return 0.75;
+                case 8: return 1.50;
+                case 12: return 2.25;
+                default: return 0;
+            }
+        }
     }
 }

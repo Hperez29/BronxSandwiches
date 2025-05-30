@@ -6,7 +6,7 @@ import java.util.List;
 public class BLTSandwich extends Sandwich {
 
     public BLTSandwich() {
-        super("BLT", 8, "White", true, createToppings());
+        super("BLT", "White", true, createToppings());
     }
 
     private static List<Topping> createToppings() {

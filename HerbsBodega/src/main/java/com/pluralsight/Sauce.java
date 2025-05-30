@@ -1,7 +1,7 @@
 package com.pluralsight;
 
-public class RegularTopping extends Topping {
-    public RegularTopping(String name) {
+public class Sauce extends Topping {
+    public Sauce(String name) {
         super(name);
     }
 
@@ -10,4 +10,3 @@ public class RegularTopping extends Topping {
         return 0.0; // included
     }
 }
-
