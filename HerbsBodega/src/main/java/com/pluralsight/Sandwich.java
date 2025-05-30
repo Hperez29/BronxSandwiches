@@ -52,24 +52,17 @@ public class Sandwich {
     }
 
     public double getPrice() {
-        double basePrice = 0.0;
+        double basePrice = switch (breadType.toLowerCase()) {
+            case "white", "wheat", "rye", "wrap" -> switch (size) {
+                case 4 -> 5.50;
+                case 8 -> 7.00;
+                case 12 -> 8.50;
+                default -> 0;
+            };
+            default -> 0;
+        };
 
         // Bread prices based on breadType and size
-        switch (breadType.toLowerCase()) {
-            case "white":
-            case "wheat":
-            case "rye":
-            case "wrap":
-                switch (size) {
-                    case 4: basePrice = 5.50; break;
-                    case 8: basePrice = 7.00; break;
-                    case 12: basePrice = 8.50; break;
-                    default: basePrice = 0; break;
-                }
-                break;
-            default:
-                basePrice = 0;
-        }
 
         // Add toppings prices
         for (Topping topping : toppings) {

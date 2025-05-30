@@ -7,13 +7,12 @@ public class Cheese extends Topping {
 
     @Override
     public double getPrice(int size) {
-        double price;
-        switch (size) {
-            case 4: price = 0.75; break;
-            case 8: price = 1.50; break;
-            case 12: price = 2.25; break;
-            default: price = 0; break;
-        }
+        double price = switch (size) {
+            case 4 -> 0.75;
+            case 8 -> 1.50;
+            case 12 -> 2.25;
+            default -> 0;
+        };
         if (isExtra) {
             price += (size == 4) ? 0.30 : (size == 8) ? 0.60 : 0.90;
         }

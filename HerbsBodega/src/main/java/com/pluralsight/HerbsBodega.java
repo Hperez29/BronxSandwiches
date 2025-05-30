@@ -6,6 +6,10 @@ import java.util.Scanner;
 
 public class HerbsBodega {
     public static void main(String[] args) {
+        // Print the current working directory
+        String currentDirectory = System.getProperty("user.dir");
+        System.out.println("Current working directory: " + currentDirectory);
+
         Scanner scanner = new Scanner(System.in);
         int choice;
 
