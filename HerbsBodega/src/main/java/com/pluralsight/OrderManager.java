@@ -1,14 +1,17 @@
 package com.pluralsight;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.InvalidPathException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
 public class OrderManager {
-    private List<Sandwich> sandwiches = new ArrayList<>();
-    private List<DrinkMenu> drinks = new ArrayList<>();
-    private List<ChipMenu> chips = new ArrayList<>();
+    private final List<Sandwich> sandwiches = new ArrayList<>();
+    private final List<DrinkMenu> drinks = new ArrayList<>();
+    private final List<ChipMenu> chips = new ArrayList<>();
 
     public void addSandwich(Sandwich sandwich) {
         sandwiches.add(sandwich);
@@ -63,16 +66,31 @@ public class OrderManager {
         return total;
     }
 
-    public void saveReceipt() {
+    public void saveReceipt(String directoryPath) {
+        if (directoryPath == null || directoryPath.isEmpty()) {
+            directoryPath = System.getProperty("user.dir"); // Use current directory if none provided
+        }
+
+        // Validate the directory path
+        try {
+            Paths.get(directoryPath); // This will throw InvalidPathException if the path is invalid
+        } catch (InvalidPathException e) {
+            System.out.println("Invalid directory path: " + directoryPath);
+            return;
+        }
+
         String filename = "HerbsBodega_Receipt_" + System.currentTimeMillis() + ".txt";
-        try (FileWriter writer = new FileWriter(filename)) {
-            writer.write("--- HerbsBodega Receipt ---\n");
+        File file = new File(directoryPath, filename);
+
+        try (FileWriter writer = new FileWriter(file)) {
+            writer.write("--- HerbsBodega Receipt ---\n\n");
 
             if (!sandwiches.isEmpty()) {
                 writer.write("Sandwiches:\n");
                 for (Sandwich s : sandwiches) {
                     writer.write(String.format("- %s : $%.2f\n", s.getDescription(), s.getPrice()));
                 }
+                writer.write("\n");
             }
 
             if (!drinks.isEmpty()) {
@@ -80,6 +98,7 @@ public class OrderManager {
                 for (DrinkMenu d : drinks) {
                     writer.write(String.format("- %s : $%.2f\n", d.getName(), d.getPrice()));
                 }
+                writer.write("\n");
             }
 
             if (!chips.isEmpty()) {
@@ -87,11 +106,13 @@ public class OrderManager {
                 for (ChipMenu c : chips) {
                     writer.write(String.format("- %s : $%.2f\n", c.getName(), c.getPrice()));
                 }
+                writer.write("\n");
             }
 
             writer.write(String.format("Total: $%.2f\n", calculateTotal()));
-            writer.write("Thank you for your order!\n");
-            System.out.println("Receipt saved as " + filename);
+            writer.write("\nThank you for your order!\n");
+
+            System.out.println("Receipt saved as " + file.getAbsolutePath());
         } catch (IOException e) {
             System.out.println("Error saving receipt: " + e.getMessage());
         }

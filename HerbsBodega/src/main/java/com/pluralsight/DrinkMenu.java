@@ -1,8 +1,8 @@
 package com.pluralsight;
 
 public class DrinkMenu {
-    private String name;
-    private double price;
+    private final String name;
+    private final double price;
 
     public DrinkMenu(String name, double price) {
         this.name = name;
