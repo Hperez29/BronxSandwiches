@@ -7,7 +7,8 @@ public class RegularTopping extends Topping {
 
     @Override
     public double getPrice(int size) {
-        return 0.0; // included
+        // Regular toppings and sauces are included (no extra cost)
+        return 0.0;
     }
 }
 

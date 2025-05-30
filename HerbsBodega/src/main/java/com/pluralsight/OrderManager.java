@@ -1,82 +1,99 @@
 package com.pluralsight;
 
-import java.util.Scanner;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class OrderManager {
+    private List<Sandwich> sandwiches = new ArrayList<>();
+    private List<DrinkMenu> drinks = new ArrayList<>();
+    private List<ChipMenu> chips = new ArrayList<>();
 
+    public void addSandwich(Sandwich sandwich) {
+        sandwiches.add(sandwich);
+    }
 
-    public void startOrder(Scanner scanner) {
-        Order currentOrder = new Order();
-        boolean ordering = true;
+    public void addDrink(DrinkMenu drink) {
+        drinks.add(drink);
+    }
 
-        while (ordering) {
-            System.out.println("\n--- HerbsBodega POS ---");
-            System.out.println("1) Add Sandwich");
-            System.out.println("2) Add Drink");
-            System.out.println("3) Add Chips");
-            System.out.println("4) Checkout");
-            System.out.println("0) Cancel Order / Exit");
-            System.out.print("Choose an option: ");
-            String input = scanner.nextLine();
+    public void addChips(ChipMenu chip) {
+        chips.add(chip);
+    }
 
-            switch (input) {
-                case "1":
-                    System.out.println("\n1) Build Your Own\n2) Signature Sandwich");
-                    String subChoice = scanner.nextLine();
+    public void displayOrder() {
+        System.out.println("\n--- Current Order ---");
 
-                    Sandwich sandwich = null;
-                    if (subChoice.equals("1")) {
-                        sandwich = SandwichBuilder.build(scanner);
-                    } else if (subChoice.equals("2")) {
-                        sandwich = SignatureMenu.chooseAndCustomizeSignatureSandwich(scanner);
-                    } else {
-                        System.out.println("Invalid choice.");
-                        break;
-                    }
-
-                    if (sandwich != null) {
-                        currentOrder.addSandwich(sandwich);
-                        System.out.println(sandwich.getName() + " added to order.");
-                    }
-                    break;
-
-                case "2":
-                    DrinkMenu drinkMenu = DrinkMenu.chooseDrink(scanner);
-                    if (drinkMenu != null) {
-                        currentOrder.addDrink(drinkMenu);
-                        System.out.println(drinkMenu.getName() + " added to order.");
-                    }
-                    break;
-
-                case "3":
-                    ChipMenu chips = ChipMenu.create(scanner);
-                    if (chips != null) {
-                        currentOrder.addChips(chips);
-                        System.out.println(chips.getName() + " added to order.");
-                    }
-                    break;
-
-                case "4":
-                    currentOrder.displayOrder();
-                    System.out.println("1) Confirm and Save\n0) Cancel Order");
-                    String confirm = scanner.nextLine();
-                    if (confirm.equals("1")) {
-                        currentOrder.saveReceipt();
-                        ordering = false;
-                    } else {
-                        System.out.println("Order cancelled.");
-                        ordering = false;
-                    }
-                    break;
-
-                case "0":
-                    System.out.println("Order cancelled.");
-                    ordering = false;
-                    break;
-
-                default:
-                    System.out.println("Invalid choice.");
+        if (!sandwiches.isEmpty()) {
+            System.out.println("Sandwiches:");
+            for (Sandwich s : sandwiches) {
+                System.out.printf("- %s : $%.2f\n", s.getDescription(), s.getPrice());
             }
+        }
+
+        if (!drinks.isEmpty()) {
+            System.out.println("Drinks:");
+            for (DrinkMenu d : drinks) {
+                System.out.printf("- %s : $%.2f\n", d.getName(), d.getPrice());
+            }
+        }
+
+        if (!chips.isEmpty()) {
+            System.out.println("Chips:");
+            for (ChipMenu c : chips) {
+                System.out.printf("- %s : $%.2f\n", c.getName(), c.getPrice());
+            }
+        }
+
+        System.out.printf("Total: $%.2f\n", calculateTotal());
+    }
+
+    public double calculateTotal() {
+        double total = 0;
+        for (Sandwich s : sandwiches) {
+            total += s.getPrice();
+        }
+        for (DrinkMenu d : drinks) {
+            total += d.getPrice();
+        }
+        for (ChipMenu c : chips) {
+            total += c.getPrice();
+        }
+        return total;
+    }
+
+    public void saveReceipt() {
+        String filename = "HerbsBodega_Receipt_" + System.currentTimeMillis() + ".txt";
+        try (FileWriter writer = new FileWriter(filename)) {
+            writer.write("--- HerbsBodega Receipt ---\n");
+
+            if (!sandwiches.isEmpty()) {
+                writer.write("Sandwiches:\n");
+                for (Sandwich s : sandwiches) {
+                    writer.write(String.format("- %s : $%.2f\n", s.getDescription(), s.getPrice()));
+                }
+            }
+
+            if (!drinks.isEmpty()) {
+                writer.write("Drinks:\n");
+                for (DrinkMenu d : drinks) {
+                    writer.write(String.format("- %s : $%.2f\n", d.getName(), d.getPrice()));
+                }
+            }
+
+            if (!chips.isEmpty()) {
+                writer.write("Chips:\n");
+                for (ChipMenu c : chips) {
+                    writer.write(String.format("- %s : $%.2f\n", c.getName(), c.getPrice()));
+                }
+            }
+
+            writer.write(String.format("Total: $%.2f\n", calculateTotal()));
+            writer.write("Thank you for your order!\n");
+            System.out.println("Receipt saved as " + filename);
+        } catch (IOException e) {
+            System.out.println("Error saving receipt: " + e.getMessage());
         }
     }
 }

@@ -37,7 +37,7 @@ public class ChipMenu {
             case "3":
                 return new ChipMenu("BBQ Chips", 1.60);
             case "4":
-                return null;
+                return null; // No chips selected
             default:
                 System.out.println("Invalid chip selection.");
                 return null;

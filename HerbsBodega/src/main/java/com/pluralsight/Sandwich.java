@@ -51,24 +51,36 @@ public class Sandwich {
         return sb.substring(0, sb.length() - 2); // Remove last comma and space
     }
 
-    @Override
-    public String toString() {
-        return getDescription();
-    }
-
     public double getPrice() {
-        double basePrice;
+        double basePrice = 0.0;
 
-        switch (size) {
-            case 4:  basePrice = 5.50; break;  // updated bread prices from your list
-            case 8:  basePrice = 7.00; break;
-            case 12: basePrice = 8.50; break;
-            default: basePrice = 0.0;
+        // Bread prices based on breadType and size
+        switch (breadType.toLowerCase()) {
+            case "white":
+            case "wheat":
+            case "rye":
+            case "wrap":
+                switch (size) {
+                    case 4: basePrice = 5.50; break;
+                    case 8: basePrice = 7.00; break;
+                    case 12: basePrice = 8.50; break;
+                    default: basePrice = 0; break;
+                }
+                break;
+            default:
+                basePrice = 0;
         }
 
+        // Add toppings prices
         for (Topping topping : toppings) {
             basePrice += topping.getPrice(size);
         }
 
         return basePrice;
-    }}
+    }
+
+    @Override
+    public String toString() {
+        return getDescription() + String.format(" - $%.2f", getPrice());
+    }
+}

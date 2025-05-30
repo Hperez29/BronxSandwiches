@@ -49,7 +49,12 @@ public class HerbsBodega {
                             System.out.print("Topping: ");
                             String toppingInput = scanner.nextLine();
                             if (toppingInput.equalsIgnoreCase("done")) break;
-                            toppings.add(new Topping(toppingInput));
+                            toppings.add(new Topping(toppingInput) {
+                                @Override
+                                public double getPrice(int size) {
+                                    return 0;
+                                }
+                            });
                         }
 
                         sandwich = new Sandwich(sandwichName, bread, toasted, toppings);

@@ -1,9 +1,5 @@
 package com.pluralsight;
 
-import java.io.FileWriter;
-import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,76 +20,51 @@ public class Order {
         chips.add(chip);
     }
 
+    public List<Sandwich> getSandwiches() {
+        return sandwiches;
+    }
+
+    public List<DrinkMenu> getDrinks() {
+        return drinks;
+    }
+
+    public List<ChipMenu> getChips() {
+        return chips;
+    }
+
+    public double calculateTotalPrice() {
+        double total = 0;
+        for (Sandwich s : sandwiches) total += s.getPrice();
+        for (DrinkMenu d : drinks) total += d.getPrice();
+        for (ChipMenu c : chips) total += c.getPrice();
+        return total;
+    }
+
     public void displayOrder() {
-        System.out.println("\n--- Current Order ---");
-        if (sandwiches.isEmpty() && drinks.isEmpty() && chips.isEmpty()) {
-            System.out.println("No items in order.");
-            return;
+        System.out.println("--- Current Order ---");
+
+        for (Sandwich sandwich : sandwiches) {
+            System.out.printf("%s (%d inch) - $%.2f%n", sandwich.getName(), sandwich.getSize(), sandwich.getPrice());
+            System.out.println("Toppings:");
+            for (Topping topping : sandwich.getToppings()) {
+                System.out.printf("  - %s: $%.2f%n", topping.getName(), topping.getPrice(sandwich.getSize()));
+            }
         }
 
-        if (!sandwiches.isEmpty()) {
-            System.out.println("Sandwiches:");
-            for (Sandwich s : sandwiches) {
-                System.out.println("- " + s.getName());
-            }
+        for (DrinkMenu drink : drinks) {
+            System.out.printf("Drink: %s - $%.2f%n", drink.getName(), drink.getPrice());
         }
-        if (!drinks.isEmpty()) {
-            System.out.println("Drinks:");
-            for (DrinkMenu d : drinks) {
-                System.out.println("- " + d.getName());
-            }
+
+        for (ChipMenu chip : chips) {
+            System.out.printf("Chips: %s - $%.2f%n", chip.getName(), chip.getPrice());
         }
-        if (!chips.isEmpty()) {
-            System.out.println("Chips:");
-            for (ChipMenu c : chips) {
-                System.out.println("- " + c.getName());
-            }
-        }
+
+        System.out.printf("Total Price: $%.2f%n", calculateTotalPrice());
     }
 
-    public void saveReceipt() {
-        String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss"));
-        String fileName = "receipt_" + timestamp + ".txt";
-
-        try (FileWriter writer = new FileWriter(fileName)) {
-            writer.write("--- HerbsBodega Receipt ---\n");
-            writer.write("Date: " + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")) + "\n\n");
-
-            double total = 0.0;
-
-            if (!sandwiches.isEmpty()) {
-                writer.write("Sandwiches:\n");
-                for (Sandwich s : sandwiches) {
-                    writer.write("- " + s.getName() + " - $" + String.format("%.2f", s.getPrice()) + "\n");
-                    total = total + s.getPrice();
-                }
-                writer.write("\n");
-            }
-
-            if (!drinks.isEmpty()) {
-                writer.write("Drinks:\n");
-                for (DrinkMenu d : drinks) {
-                    writer.write("- " + d.getName() + " - $" + String.format("%.2f", d.getPrice()) + "\n");
-                    total += d.getPrice();
-                }
-                writer.write("\n");
-            }
-
-            if (!chips.isEmpty()) {
-                writer.write("Chips:\n");
-                for (ChipMenu c : chips) {
-                    writer.write("- " + c.getName() + " - $" + String.format("%.2f", c.getPrice()) + "\n");
-                    total += c.getPrice();
-                }
-                writer.write("\n");
-            }
-
-            writer.write("Total: $" + String.format("%.2f", total) + "\n");
-            writer.write("\nThank you for visiting HerbsBodega!\n");
-
-            System.out.println("Receipt saved as " + fileName);
-        } catch (IOException e) {
-            System.out.println("Error saving receipt: " + e.getMessage());
-        }
+    public Object saveReceipt() {
+    return null;
     }
+
+    // Add saveReceipt() method as needed
 }

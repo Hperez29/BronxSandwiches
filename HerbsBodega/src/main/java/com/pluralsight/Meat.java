@@ -1,29 +1,22 @@
 package com.pluralsight;
 
 public class Meat extends Topping {
-    private boolean isExtra;
-
     public Meat(String name, boolean isExtra) {
-        super(name);
-        this.isExtra = isExtra;
+        super(name, isExtra);
     }
 
     @Override
     public double getPrice(int size) {
-        if (isExtra) {
-            switch (size) {
-                case 4: return 0.50;
-                case 8: return 1.00;
-                case 12: return 1.50;
-                default: return 0;
-            }
-        } else {
-            switch (size) {
-                case 4: return 1.00;
-                case 8: return 2.00;
-                case 12: return 3.00;
-                default: return 0;
-            }
+        double price;
+        switch (size) {
+            case 4: price = 1.00; break;
+            case 8: price = 2.00; break;
+            case 12: price = 3.00; break;
+            default: price = 0; break;
         }
+        if (isExtra) {
+            price += (size == 4) ? 0.50 : (size == 8) ? 1.00 : 1.50;
+        }
+        return price;
     }
 }
